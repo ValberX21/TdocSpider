@@ -1,0 +1,65 @@
+﻿@model TdocSpider.Application.Models.ViewModels.DocumentoAtualizaViewModel
+
+@{
+    ViewData["Title"] = "Editar Documento";
+}
+
+<div class="container">
+
+<h2>Editar Documento</h2>
+
+<form asp-action="AtualizaDoc" asp-controller="Documento" method="post" enctype="multipart/form-data">
+    <div class="card">
+        <div class="card-body">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="Titulo" class="form-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Descricao" class="form-label"></label>
+                <textarea asp-for="Descricao" class="form-control"></textarea>
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label>Nome do arquivo Atual:</label>
+                <input asp-for="NomeArquivo" class="form-label" />
+                <span asp-validation-for="NomeArquivo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Substituir Arquivo (opcional)</label>
+                <input type="file" name="Arquivo" class="form-control" />
+                <span asp-validation-for="Arquivo" class="text-danger"></span>
+            </div>
+
+            @if (Model.NomeArquivo.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
+            {
+                <p><strong>Visualização:</strong></p>
+                <iframe src="@Url.Action("BaixaArquivo", "Documento", new { id = Model.Id })"
+                        width="100%" height="600px" frameborder="0">
+                </iframe>
+            }
+            else
+            {
+                <p>
+                    <strong>Baixar arquivo:</strong>
+                    <a href="@Url.Action("BaixaArquivo", "Documento", new { id = Model.Id })"
+                       class="btn btn-sm btn-success ms-2">
+                        📥 Clique aqui para baixar o arquivo
+                    </a>
+                </p>
+            }
+
+            <button type="submit" class="btn btn-primary mt-3">Salvar Alterações</button>
+            <a asp-action="ListDocumentos" class="btn btn-secondary mt-3">Voltar</a>
+            <a asp-action="DeletarDocumentos" asp-route-id="@Model.Id" class="btn btn-danger mt-3">Deletar arquivo</a>
+        </div>
+    </div>
+</form>
+
+</div>

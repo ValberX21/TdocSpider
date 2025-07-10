@@ -1,0 +1,133 @@
+﻿@model TdocSpider.Application.Models.ViewModels.DocumentoPaginadoViewModel
+
+
+@{
+    ViewData["Title"] = "Lista de Documentos";
+}
+
+<div class="container">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Documentos</h2>
+    <a asp-action="Index"
+       asp-controller="Documento"
+       class="btn btn-primary">
+        <i class="bi bi-plus-lg"></i> Novo Documento
+    </a>
+</div>
+
+<form asp-action="ListDocumentos" method="get" class="mb-4">
+    <div class="input-group">
+        <input type="text" name="filtroTitulo" value="@Model.FiltroTitulo" class="form-control" placeholder="Filtrar por Título..." />
+        <button type="submit" class="btn btn-outline-secondary">Filtrar</button>
+    </div>
+</form>
+
+
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                <a asp-action="ListDocumentos"
+                   asp-route-ordenarPor="Titulo"
+                   asp-route-direcao="@(Model.OrdenarPor == "Titulo" && Model.DirecaoOrdenacao == "asc" ? "desc" : "asc")"
+                   asp-route-filtroTitulo="@Model.FiltroTitulo">
+                    Título
+                    @if (Model.OrdenarPor == "Titulo")
+                    {
+                        <i class="bi @(Model.DirecaoOrdenacao == "asc" ? "bi-caret-up-fill" : "bi-caret-down-fill")"></i>
+                    }
+                </a>
+            </th>
+
+            <th>
+                <a asp-action="ListDocumentos"
+                   asp-route-ordenarPor="Descricao"
+                   asp-route-direcao="@(Model.OrdenarPor == "Descricao" && Model.DirecaoOrdenacao == "asc" ? "desc" : "asc")"
+                   asp-route-filtroTitulo="@Model.FiltroTitulo">
+                    Descrição
+                    @if (Model.OrdenarPor == "Descricao")
+                    {
+                        <i class="bi @(Model.DirecaoOrdenacao == "asc" ? "bi-caret-up-fill" : "bi-caret-down-fill")"></i>
+                    }
+                </a>
+            </th>
+
+            <th>
+                <a asp-action="ListDocumentos"
+                   asp-route-ordenarPor="NomeArquivo"
+                   asp-route-direcao="@(Model.OrdenarPor == "NomeArquivo" && Model.DirecaoOrdenacao == "asc" ? "desc" : "asc")"
+                   asp-route-filtroTitulo="@Model.FiltroTitulo">
+                    Nome do Arquivo
+                    @if (Model.OrdenarPor == "NomeArquivo")
+                    {
+                        <i class="bi @(Model.DirecaoOrdenacao == "asc" ? "bi-caret-up-fill" : "bi-caret-down-fill")"></i>
+                    }
+                </a>
+            </th>
+
+            <th class="d-none">Tipo do arquivo</th>
+
+            <th>Data da Criação</th>
+            <th>Baixar</th>
+            <th>Editar</th>
+            <th>Vizualiar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var doc in Model.Documentos)
+        {
+            <tr>
+                <td>@doc.Titulo</td>
+                <td>@doc.Descricao</td>
+                <td>@doc.NomeArquivo</td>
+                <td class="d-none">@doc.TipoArquivo</td>
+                <td>@doc.DataHoraCriacao.ToString("dd/MM/yyyy")</td>
+                <td class="text-center">
+                    <a asp-action="BaixaArquivo"
+                       asp-controller="Documento"
+                       asp-route-id="@doc.Id"
+                       class="btn btn-sm btn-outline-success"
+                       title="Baixar documento">
+                        <i class="bi bi-download"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a asp-action="EditarDocumento"
+                       asp-controller="Documento"
+                       asp-route-id="@doc.Id"
+                       class="btn btn-sm btn-outline-primary"
+                       title="Editar documento">
+                        <i class="bi bi-pencil"></i>
+                    </a>
+                </td>
+                <td class="text-center">
+                    <a asp-action="Visualizar"
+                       asp-controller="Documento"
+                       asp-route-id="@doc.Id"
+                       class="btn btn-sm btn-outline-primary"
+                       title="Visualizar documento">
+                        <i class="bi bi-eye"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        @for (int i = 1; i <= Model.TotalPaginas; i++)
+        {
+            <li class="page-item @(i == Model.PaginaAtual ? "active" : "")">
+                <a class="page-link"
+                   asp-action="ListDocumentos"
+                   asp-route-page="@i"
+                   asp-route-filtroTitulo="@Model.FiltroTitulo"
+                   asp-route-ordenarPor="@Model.OrdenarPor"
+                   asp-route-direcao="@Model.DirecaoOrdenacao">@i</a>
+            </li>
+        }
+    </ul>
+</nav>
+
+</div>

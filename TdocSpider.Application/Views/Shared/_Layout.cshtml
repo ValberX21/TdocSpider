@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - TdocSpider</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+
+    <style>
+        /* Sidebar toggle styles */
+        #wrapper {
+            display: flex;
+            width: 100%;
+            align-items: stretch;
+        }
+
+        #sidebar-wrapper {
+            min-width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
+            margin-left: -250px;
+        }
+
+        #page-content-wrapper {
+            flex: 1;
+        }
+
+        .sidebar-heading {
+            padding: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .list-group-item {
+            font-size: 1rem;
+        }
+
+        .list-group-item i {
+            width: 20px;
+        }
+
+        @@media (max-width: 768px) {
+            #sidebar-wrapper {
+                margin-left: -250px;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex toggled" id="wrapper">
+
+        <div class="border-end bg-white" id="sidebar-wrapper">
+            <div class="sidebar-heading bg-primary text-white">DOCSPIDER</div>
+            <div class="list-group list-group-flush">
+
+                <a asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action">
+                    <i class="bi bi-house-door-fill me-2"></i> Início
+                </a>
+                <a asp-controller="Documento" asp-action="ListDocumentos" class="list-group-item list-group-item-action">
+                    <i class="bi bi-files me-2"></i> Meus Documentos
+                </a>
+                <a href="#" class="list-group-item list-group-item-action">
+                    <i class="bi bi-info-circle me-2"></i> Sobre
+                </a>
+
+            </div>
+        </div>
+
+        <div id="page-content-wrapper">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                <button class="btn btn-primary" id="sidebarToggle">&#9776;</button>
+            </nav>
+
+            <div class="container-fluid mt-4">
+                <partial name="_Notification" />
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#sidebarToggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        });
+    </script>
+</body>
+</html>
