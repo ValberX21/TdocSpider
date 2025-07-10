@@ -1,0 +1,21 @@
+﻿@model TdocSpider.Application.Models.ViewModels.SobreViewModel
+@{
+    ViewData["Title"] = "Sobre";
+}
+
+<div class="container mt-5">
+    <div class="text-center">
+        <img src="@Model.LogoUrl" alt="Logo da Empresa" style="max-width: 150px;" class="mb-3" />
+
+        <h2 class="mb-3">@Model.NomeSistema</h2>
+        <p class="lead">Sistema de Gerenciamento de Documentos</p>
+
+        <hr class="my-4" />
+
+        <p><strong>Versão do Sistema:</strong> @Model.Versao</p>
+        <p><strong>Data da Última Atualização:</strong> @Model.DataAtualizacao</p>
+        <p><strong>Desenvolvido por:</strong> @Model.Desenvolvedor</p>
+
+        <p class="text-muted mt-4">@Model.MensagemRodape</p>
+    </div>
+</div>

@@ -40,20 +40,31 @@
             font-size: 1rem;
         }
 
-        .list-group-item i {
-            width: 20px;
-        }
+            .list-group-item i {
+                width: 20px;
+            }
 
+        /* Mobile behavior: sidebar hidden by default and overlaid when open */
         @@media (max-width: 768px) {
             #sidebar-wrapper {
-                margin-left: -250px;
+                position: absolute;
+                z-index: 1000;
+                background: white;
+                height: 100%;
+                width: 250px;
             }
 
-            #wrapper.toggled #sidebar-wrapper {
+        #wrapper:not(.toggled) #sidebar-wrapper {
+            display: none;
+        }
+
+        #wrapper.toggled #sidebar-wrapper {
                 margin-left: 0;
-            }
+        }
+
         }
     </style>
+
 </head>
 <body>
     <div class="d-flex toggled" id="wrapper">
@@ -68,7 +79,8 @@
                 <a asp-controller="Documento" asp-action="ListDocumentos" class="list-group-item list-group-item-action">
                     <i class="bi bi-files me-2"></i> Meus Documentos
                 </a>
-                <a href="#" class="list-group-item list-group-item-action">
+
+                <a asp-controller="Sobre" asp-action="Index" class="list-group-item list-group-item-action">
                     <i class="bi bi-info-circle me-2"></i> Sobre
                 </a>
 
