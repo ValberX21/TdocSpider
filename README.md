@@ -26,6 +26,7 @@ TdocSpider/
 │ ├── Data/ → DbContext e acesso ao banco
 │ ├── Helper/ → Classes auxiliares
 │ ├── Migrations/ → Migrations EF Core
+│ ├── ModelosDocumentos/ → Exemplos de documentos
 │ ├── Models/ → Entidades e ViewModels
 │ ├── Repository/ → Interfaces e implementações de repositórios
 │ ├── Services/ → Lógica de negócio
@@ -37,7 +38,6 @@ TdocSpider/
 └── TdocSpider.Tests/ → Projeto de Testes Unitários com NUnit
 ├── Services/ → Testes da camada de serviços
 ├── TestHelpers/ → Mocks auxiliares (ex: FormFileMock)
-└── ModelosDocumentos/ → Exemplos de documentos
 ```
 ---
 
